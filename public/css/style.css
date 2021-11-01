@@ -1,0 +1,110 @@
+body {
+    background-color: #fff;
+    font-family: "Rubrik", sans-serif;
+    font-weight: 300;
+}
+
+.img {
+    width: 100%;
+}
+
+.size {
+    font-size: 18px;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Rubik", sans-serif;
+    font-weight: bolder;
+}
+
+p {
+    font-family: "Rubrik", sans-serif;
+    font-weight: 300;
+}
+
+.cek {
+    font-size: 3.5em;
+}
+
+.plagiat {
+    font-size: 2.5em;
+}
+
+.wartawan {
+    font-size: 1.8em;
+}
+
+a {
+    font-weight: 300;
+}
+
+.btn-merah {
+    color: #e6f5fd;
+    background-color: #2356b2;
+    font-weight: 300;
+}
+
+.bg-jaro {
+    background-color: #254472;
+}
+
+.bg-text {
+    color: #254472;
+}
+
+.btn-jaro {
+    background-color: #254472;
+    color: #fff;
+    font-weight: 300;
+}
+
+.bg-link {
+    color: #254472;
+    size: 10px;
+}
+
+.bg-link > span {
+    font-size: x-large;
+}
+
+.bg-foot {
+    font-weight: 300;
+    color: #fff;
+}
+
+.btn-jaro:hover {
+    color: rgb(161, 161, 161) !important;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.login {
+    margin-bottom: 20vh;
+}
