@@ -29,7 +29,7 @@
 
     <footer class="footer mt-auto py-3 bg-jaro ">
       <div class="container text-center">
-        <span class="bg-foot">Jaro Winkler</span>
+        <span class="bg-foot">Similarity Berita Online Dengan Algoritma Jaro Winkler</span>
       </div>
     </footer>
 
