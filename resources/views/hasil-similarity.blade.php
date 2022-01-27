@@ -70,14 +70,14 @@
                         <td>No</td>
                         <td>Judul</td>
                         <td>Similarity</td>
-                        {{-- <td>Detail</td> --}}
+                        <td>Detail</td>
                     </tr>
                 </thead>
                 <colgroup>
                     <col span="1" style="width: 3%;">
                     <col span="1" style="width: 50%;">
                     <col span="1" style="width: 55%;">
-                    {{-- <col span="1" style="width: 4%;"> --}}
+                    <col span="1" style="width: 4%;">
                 </colgroup>
                 <tbody>
                     @foreach ( $allData as $data )
@@ -111,11 +111,11 @@
                                         </div>
                                     @endif
                                 </td>
-                                {{-- <td>
+                                <td>
                                     <a type="button" class="btn btn-jaro" data-bs-toggle="modal" data-bs-target="#{{ $data['Id'] }}">
                                         <i class="fas fa-plus-circle"></i>
                                     </a>
-                                </td> --}}
+                                </td>
                             </tr>
                             <div class="modal fade" id="{{ $data['Id'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl modal-dialog-centered">

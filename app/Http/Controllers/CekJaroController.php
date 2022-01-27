@@ -42,32 +42,39 @@ class CekJaroController extends Controller
             $data = strtolower($meta['keywords']);
             $daftar_kata = ['sampit', 'kecamatan', 'pemkab', 'bupati', ',', 'kepala', 'kifayah', 'fardu', 'mui', 'ketua', 'kotim'];
             $hapus = str_replace($daftar_kata, " ", $data);
-            $space = preg_replace('/\s+/', ' ', $hapus);
+            $string_array = explode(" ", $hapus);
+            $final_array = array_unique($string_array);
+            $final_string = implode(" ", $final_array);
+            $space = preg_replace('/\s+/', ' ', $final_string);
             $space = trim($space);
 
             $data = str_replace(" ", "%20", $space);
 
-            return $data;
+            // dd($data);
+            $hasil = session()->put('key', $data);
+
+            return $hasil;
         }
 
+        getKeySearch($link_uji);
 
         /**
          * 
-         * FUNGSI MENGAMBIL URL DATA BERITA INDEX KE 1
+         * FUNGSI MENGAMBIL URL DATA BERITA Ke 1-10
          * 
          */
         function GetUrlData1($string, $link_berita, $param)
         {
             $Query      = $string;
-            $Num        = 2;
-            $API_KEY    = 'AIzaSyA3J-1ZuKu8d7WoMyoFW12BmiCRQiCV-xE';
+            $Num        = 4;
+            $API_KEY    = 'AIzaSyAUTFrr7uNwLYHejrA0KymmVDs6kKCOcps';
             $ID         = '907b295d015a55408';
             $timeout    = 0;
 
             $ch      = curl_init();
 
-            echo 'https://www.googleapis.com/customsearch/v1/siterestrict?key=' . $API_KEY . '&cx=' . $ID . '&q=site:' . $link_berita . '%20intext:' . $Query . '&num=' . $Num . '&filter=1&gl=id';
-            curl_setopt($ch, CURLOPT_URL, 'https://www.googleapis.com/customsearch/v1/siterestrict?key=' . $API_KEY . '&cx=' . $ID . '&q=site:' . $link_berita . '%20intext:' . $Query . '&num=' . $Num . '&filter=1&gl=id');
+            echo 'https://www.googleapis.com/customsearch/v1/siterestrict?key=' . $API_KEY . '&cx=' . $ID . '&q=site:' . $link_berita . '%20intext:' . $Query . '&num=' . $Num . '&filter=0&gl=id';
+            curl_setopt($ch, CURLOPT_URL, 'https://www.googleapis.com/customsearch/v1/siterestrict?key=' . $API_KEY . '&cx=' . $ID . '&q=site:' . $link_berita . '%20intext:' . $Query . '&num=' . $Num . '&filter=0&gl=id');
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -91,22 +98,22 @@ class CekJaroController extends Controller
 
         /**
          * 
-         * FUNGSI MENGAMBIL URL DATA BERITA INDEX KE 2
+         * FUNGSI MENGAMBIL URL DATA BERITA KE 11-20
          * 
          */
 
         function GetUrlData2($string, $link_berita, $param)
         {
             $Query      = $string;
-            $Num        = 2;
-            $API_KEY    = 'AIzaSyBiLGYE0VLm8A-vzBz71by6JNOK_IjcxBU';
+            $Num        = 4;
+            $API_KEY    = 'AIzaSyDPdTaCUj-5naUoppbGfscBtKjXd6HYt5E';
             $ID         = 'd0d8d435cd904182f';
 
             $ch      = curl_init();
             $timeout = 0;
 
-            echo 'https://www.googleapis.com/customsearch/v1/siterestrict?key=' . $API_KEY . '&cx=' . $ID . '&q=site:' . $link_berita . '%20intext:' . $Query . '&num=' . $Num . '&filter=1&gl=id';
-            curl_setopt($ch, CURLOPT_URL, 'https://www.googleapis.com/customsearch/v1/siterestrict?key=' . $API_KEY . '&cx=' . $ID . '&q=site:' . $link_berita . '%20intext:' . $Query . '&num=' . $Num . '&filter=1&gl=id');
+            echo 'https://www.googleapis.com/customsearch/v1/siterestrict?key=' . $API_KEY . '&cx=' . $ID . '&q=site:' . $link_berita . '%20intext:' . $Query . '&num=' . $Num . '&filter=0&gl=id';
+            curl_setopt($ch, CURLOPT_URL, 'https://www.googleapis.com/customsearch/v1/siterestrict?key=' . $API_KEY . '&cx=' . $ID . '&q=site:' . $link_berita . '%20intext:' . $Query . '&num=' . $Num . '&filter=0&gl=id');
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -125,28 +132,6 @@ class CekJaroController extends Controller
 
                 echo ' Error Get Api ' . $link_berita . ' ';
             }
-        }
-
-        // Cek website online
-        function isDomainAvailible($domain)
-        {
-            if (!filter_var($domain, FILTER_VALIDATE_URL)) {
-                return false;
-            }
-
-            $curlInit = curl_init($domain);
-            curl_setopt($curlInit, CURLOPT_CONNECTTIMEOUT, 10);
-            curl_setopt($curlInit, CURLOPT_HEADER, true);
-            curl_setopt($curlInit, CURLOPT_NOBODY, true);
-            curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
-
-            $response = curl_exec($curlInit);
-
-            curl_close($curlInit);
-
-            if ($response) return true;
-
-            return false;
         }
 
         /**
@@ -168,12 +153,13 @@ class CekJaroController extends Controller
                 $taghtml    = Taghtml::pluck('taghtml');
                 $url        = $d;
 
-                // Menampilkan status website
-                if (isDomainAvailible($url)) {
-                    //Mengambil data url format utuh / html
-                    $html = $client->load($url);
-                    // Set Session data tag html
+                //Mengambil data url format utuh / html
+                $html = $client->load($url);
+                // Set Session data tag html
+
+                if ($html != null) {
                     session()->put('html', $html->outertext);
+
                     //get data dari database taghtml
                     foreach ($taghtml as $dat) {
                         //Menghapus tag beserta isinya yang tidak di perlukan
@@ -195,7 +181,7 @@ class CekJaroController extends Controller
                     //Menghapus Spasi double
                     $nospace = trim($notag);
                     //Array kata yg ingin di hapus
-                    $daftar_kata = ['Baca', 'Juga', 'Tags', 'tags', 'tag', 'tags', 'Us', 'Find', 'Sitemap', 'matakalteng', 'Klik.'];
+                    $daftar_kata = ['Baca', 'Juga', 'Tags', 'tags', 'tag', 'tags', 'Us', 'Find', 'Sitemap', 'matakalteng', 'Klik.', 'BERITAKALTENG', 'com', 'kalamanthana', 'kaltengtoday.com', 'KALTENG.CO', 'MASAPNEWS'];
                     //Menghapus kata yang tidak penting
                     $hapus = str_replace($daftar_kata, "", $nospace);
                     //Menghapus kata terakhit setelah . yang berisi informasi wartawan
@@ -204,15 +190,14 @@ class CekJaroController extends Controller
                     // dd($data);
                     return $data;
                 } else {
-
-                    echo "Oops, website sedang ganguan.";
+                    echo "<strong> Oops, Website Sedang Down.</strong>";
                 }
             }
         }
 
         /**
          * 
-         * FUNGSI MENGAMBIL URL DATA BERITA
+         * FUNGSI MENGAMBIL ISI BERITA DATA UJI
          * 
          */
         function getContain($string1)
@@ -287,7 +272,7 @@ class CekJaroController extends Controller
         /**
          * 
          * 
-         *  Text Pre-processing
+         *  TEXT PRE-PROCESSING
          * 
          * 
          */
@@ -409,7 +394,7 @@ class CekJaroController extends Controller
 
         /**
          * 
-         * FUNGSI MENGAMBIL NILAI STING YANG SAMA DARI PROSES PERBANDINGAN KEDUA STRING
+         * FUNGSI MENGAMBIL NILAI STRING YANG SAMA DARI PROSES PERBANDINGAN KEDUA STRING
          * DALAM BENTUK ANGKA SESUAI DENGAN JUMLAH STRING YANG SAMA
          * 
          */
@@ -518,11 +503,12 @@ class CekJaroController extends Controller
 
         /**
          * 
-         *  Proses Untuk Uji
+         *  PROSES UNTUK DATA UJI
          * 
          */
+
         $stemmerFactory = new \Sastrawi\Stemmer\StemmerFactory();
-        $stemmer  = $stemmerFactory->createStemmer();
+        $stemmer        = $stemmerFactory->createStemmer();
 
         $string1        = getContain($link_uji);
         $caseFolding1   = caseFolding($string1);
@@ -530,18 +516,19 @@ class CekJaroController extends Controller
         $filtering1     = filtering($numberRemoval1);
         $steming1       = $stemmer->stem($filtering1);
         $length1        = stringLenght($steming1);
+
         /**
          * 
          * 
          */
 
-        function actionAll1($id, $steming1, $link, $url, $param)
+        function actionAll1($id, $steming1, $url, $param)
         {
 
             $stemmerFactory = new \Sastrawi\Stemmer\StemmerFactory();
             $stemmer  = $stemmerFactory->createStemmer();
 
-            $URL_DATA       = GetUrlData1(getKeySearch($link), $url, $param);
+            $URL_DATA       = GetUrlData1(session()->get('key'), $url, $param);
             $STRING_DATA    = getDataContent($URL_DATA, $url);
             $CASEFOLDING    = caseFolding($STRING_DATA);
             $NUMBER_REMOVAL = numberRemoval($CASEFOLDING);
@@ -586,13 +573,13 @@ class CekJaroController extends Controller
             }
         }
 
-        function actionAll2($id, $steming1, $link, $url, $param)
+        function actionAll2($id, $steming1, $url, $param)
         {
 
             $stemmerFactory = new \Sastrawi\Stemmer\StemmerFactory();
             $stemmer  = $stemmerFactory->createStemmer();
 
-            $URL_DATA       = GetUrlData2(getKeySearch($link), $url, $param);
+            $URL_DATA       = GetUrlData2(session()->get('key'), $url, $param);
             $STRING_DATA    = getDataContent($URL_DATA, $url);
             $CASEFOLDING    = caseFolding($STRING_DATA);
             $NUMBER_REMOVAL = numberRemoval($CASEFOLDING);
@@ -638,47 +625,91 @@ class CekJaroController extends Controller
         }
 
         $data = array(
-            "1" => actionAll1('klikkalteng1', $steming1, $link_uji, 'klikkalteng.id', '0'),
-            "2" => actionAll1('klikkalteng2', $steming1, $link_uji, 'klikkalteng.id', '1'),
-            "3" => actionAll1('borneonews1', $steming1, $link_uji, 'borneonews.co.id', '0'),
-            "4" => actionAll1('borneonews2', $steming1, $link_uji, 'borneonews.co.id', '1'),
-            "5" => actionAll1('radarsampit1', $steming1, $link_uji, 'radarsampit.com', '0'),
-            "6" => actionAll1('radarsampit2', $steming1, $link_uji, 'radarsampit.com', '1'),
-            "7" => actionAll1('matakalteng1', $steming1, $link_uji, 'matakalteng.com', '0'),
-            "8" => actionAll1('matakalteng2', $steming1, $link_uji, 'matakalteng.com', '1'),
-            "9" => actionAll1('beritakalteng1', $steming1, $link_uji, 'beritakalteng.com', '0'),
-            "10" => actionAll1('beritakalteng2', $steming1, $link_uji, 'beritakalteng.com', '2'),
-            "11" => actionAll1('antaranews1', $steming1, $link_uji, 'kalteng.antaranews.com', '0'),
-            "12" => actionAll1('antaranews2', $steming1, $link_uji, 'kalteng.antaranews.com', '1'),
-            "13" => actionAll1('kaltengnews1', $steming1, $link_uji, 'kaltengnews.co.id', '0'),
-            "14" => actionAll1('kaltengnews2', $steming1, $link_uji, 'kaltengnews.co.id', '1'),
-            "15" => actionAll1('sampit1', $steming1, $link_uji, 'sampit.prokal.co', '0'),
-            "16" => actionAll1('sampit2', $steming1, $link_uji, 'sampit.prokal.co', '1'),
-            "17" => actionAll1('kaltengtoday1', $steming1, $link_uji, 'kaltengtoday.com', '0'),
-            "18" => actionAll1('kaltengtoday2', $steming1, $link_uji, 'kaltengtoday.com', '1'),
-            "19" => actionAll1('humabetang1', $steming1, $link_uji, 'humabetang.com', '0'),
-            "20" => actionAll1('humabetang2', $steming1, $link_uji, 'humabetang.com', '1'),
-            "21" => actionAll2('kalteng1', $steming1, $link_uji, 'kalteng.co', '0'),
-            "22" => actionAll2('kalteng2', $steming1, $link_uji, 'kalteng.co', '1'),
-            "23" => actionAll2('kaltengoke1', $steming1, $link_uji, 'kaltengoke.com', '0'),
-            "24" => actionAll2('kaltengoke2', $steming1, $link_uji, 'kaltengoke.com', '1'),
-            "25" => actionAll2('inikalteng1', $steming1, $link_uji, 'inikalteng.com', '0'),
-            "26" => actionAll2('inikalteng2', $steming1, $link_uji, 'inikalteng.com', '1'),
-            "27" => actionAll2('kaltengonline1', $steming1, $link_uji, 'kaltengonline.com', '0'),
-            "28" => actionAll2('kaltengonline2', $steming1, $link_uji, 'kaltengonline.com', '1'),
-            "29" => actionAll2('borneo241', $steming1, $link_uji, 'borneo24.com', '0'),
-            "30" => actionAll2('borneo242', $steming1, $link_uji, 'borneo24.com', '1'),
-            "31" => actionAll2('kpfmpalangkaraya1', $steming1, $link_uji, 'kpfmpalangkaraya.com', '0'),
-            "32" => actionAll2('kpfmpalangkaraya2', $steming1, $link_uji, 'kpfmpalangkaraya.com', '1'),
-            "33" => actionAll2('beritasampit1', $steming1, $link_uji, 'beritasampit.co.id', '0'),
-            "34" => actionAll2('beritasampit2', $steming1, $link_uji, 'beritasampit.co.id', '1'),
-            "35" => actionAll2('baritaitah1', $steming1, $link_uji, 'baritaitah.co.id', '0'),
-            "36" => actionAll2('baritaitah2', $steming1, $link_uji, 'baritaitah.co.id', '1'),
-            "37" => actionAll2('kalteng.indeksnews1', $steming1, $link_uji, 'kalteng.indeksnews.com', '0'),
-            "38" => actionAll2('kalteng.indeksnews2', $steming1, $link_uji, 'kalteng.indeksnews.com', '1'),
+            "1" => actionAll1('klikkalteng1', $steming1, 'klikkalteng.id', '0'),
+            "2" => actionAll1('klikkalteng2', $steming1, 'klikkalteng.id', '1'),
+            "3" => actionAll1('klikkalteng3', $steming1, 'klikkalteng.id', '2'),
+            "4" => actionAll1('klikkalteng4', $steming1, 'klikkalteng.id', '3'),
+            "5" => actionAll1('borneonews1', $steming1, 'borneonews.co.id', '0'),
+            "6" => actionAll1('borneonews2', $steming1, 'borneonews.co.id', '1'),
+            "7" => actionAll1('borneonews3', $steming1, 'borneonews.co.id', '2'),
+            "8" => actionAll1('borneonews4', $steming1, 'borneonews.co.id', '3'),
+            "9" => actionAll1('radarsampit1', $steming1, 'radarsampit.com', '0'),
+            "10" => actionAll1('radarsampit2', $steming1, 'radarsampit.com', '1'),
+            "11" => actionAll1('radarsampit3', $steming1, 'radarsampit.com', '2'),
+            "12" => actionAll1('radarsampit4', $steming1, 'radarsampit.com', '3'),
+            "13" => actionAll1('matakalteng1', $steming1, 'matakalteng.com', '0'),
+            "14" => actionAll1('matakalteng2', $steming1, 'matakalteng.com', '1'),
+            "15" => actionAll1('matakalteng3', $steming1, 'matakalteng.com', '2'),
+            "16" => actionAll1('matakalteng4', $steming1, 'matakalteng.com', '3'),
+            "17" => actionAll1('beritakalteng1', $steming1, 'beritakalteng.com', '0'),
+            "18" => actionAll1('beritakalteng2', $steming1, 'beritakalteng.com', '1'),
+            "19" => actionAll1('beritakalteng3', $steming1, 'beritakalteng.com', '2'),
+            "20" => actionAll1('beritakalteng4', $steming1, 'beritakalteng.com', '3'),
+            "21" => actionAll1('antaranews1', $steming1, 'kalteng.antaranews.com', '0'),
+            "22" => actionAll1('antaranews2', $steming1, 'kalteng.antaranews.com', '1'),
+            "23" => actionAll1('antaranews3', $steming1, 'kalteng.antaranews.com', '2'),
+            "24" => actionAll1('antaranews4', $steming1, 'kalteng.antaranews.com', '3'),
+            "25" => actionAll1('kalamanthana1', $steming1, 'kalamanthana.id', '0'),
+            "26" => actionAll1('kaltengnews2', $steming1, 'kalamanthana.id', '1'),
+            "27" => actionAll1('kaltengnews3', $steming1, 'kalamanthana.id', '2'),
+            "28" => actionAll1('kaltengnews4', $steming1, 'kalamanthana.id', '3'),
+            "29" => actionAll1('sampit1', $steming1, 'sampit.prokal.co', '0'),
+            "30" => actionAll1('sampit2', $steming1, 'sampit.prokal.co', '1'),
+            "31" => actionAll1('sampit3', $steming1, 'sampit.prokal.co', '2'),
+            "32" => actionAll1('sampit4', $steming1, 'sampit.prokal.co', '3'),
+            "33" => actionAll1('kaltengtoday1', $steming1, 'kaltengtoday.com', '0'),
+            "34" => actionAll1('kaltengtoday2', $steming1, 'kaltengtoday.com', '1'),
+            "35" => actionAll1('kaltengtoday3', $steming1, 'kaltengtoday.com', '2'),
+            "36" => actionAll1('kaltengtoday4', $steming1, 'kaltengtoday.com', '3'),
+            "37" => actionAll1('humabetang1', $steming1, 'humabetang.com', '0'),
+            "38" => actionAll1('humabetang2', $steming1, 'humabetang.com', '1'),
+            "39" => actionAll1('humabetang3', $steming1, 'humabetang.com', '2'),
+            "40" => actionAll1('humabetang4', $steming1, 'humabetang.com', '3'),
+            "41" => actionAll2('kalteng1', $steming1, 'kalteng.co', '0'),
+            "42" => actionAll2('kalteng2', $steming1, 'kalteng.co', '1'),
+            "43" => actionAll2('kalteng3', $steming1, 'kalteng.co', '2'),
+            "44" => actionAll2('kalteng4', $steming1, 'kalteng.co', '3'),
+            "45" => actionAll2('kaltengoke1', $steming1, 'kaltengoke.com', '0'),
+            "46" => actionAll2('kaltengoke2', $steming1, 'kaltengoke.com', '1'),
+            "47" => actionAll2('kaltengoke3', $steming1, 'kaltengoke.com', '2'),
+            "48" => actionAll2('kaltengoke4', $steming1, 'kaltengoke.com', '3'),
+            "49" => actionAll2('inikalteng1', $steming1, 'inikalteng.com', '0'),
+            "50" => actionAll2('inikalteng2', $steming1, 'inikalteng.com', '1'),
+            "51" => actionAll2('inikalteng3', $steming1, 'inikalteng.com', '2'),
+            "52" => actionAll2('inikalteng4', $steming1, 'inikalteng.com', '3'),
+            "53" => actionAll2('kaltengonline1', $steming1, 'kaltengonline.com', '0'),
+            "54" => actionAll2('kaltengonline2', $steming1, 'kaltengonline.com', '1'),
+            "55" => actionAll2('kaltengonline3', $steming1, 'kaltengonline.com', '2'),
+            "56" => actionAll2('kaltengonline4', $steming1, 'kaltengonline.com', '3'),
+            "57" => actionAll2('borneo241', $steming1, 'borneo24.com', '0'),
+            "58" => actionAll2('borneo242', $steming1, 'borneo24.com', '1'),
+            "59" => actionAll2('borneo243', $steming1, 'borneo24.com', '2'),
+            "60" => actionAll2('borneo244', $steming1, 'borneo24.com', '3'),
+            "61" => actionAll2('kpfmpalangkaraya1', $steming1, 'kpfmpalangkaraya.com', '0'),
+            "62" => actionAll2('kpfmpalangkaraya2', $steming1, 'kpfmpalangkaraya.com', '1'),
+            "63" => actionAll2('kpfmpalangkaraya3', $steming1, 'kpfmpalangkaraya.com', '2'),
+            "64" => actionAll2('kpfmpalangkaraya4', $steming1, 'kpfmpalangkaraya.com', '3'),
+            "65" => actionAll2('beritasampit1', $steming1, 'beritasampit.co.id', '0'),
+            "66" => actionAll2('beritasampit2', $steming1, 'beritasampit.co.id', '1'),
+            "67" => actionAll2('beritasampit3', $steming1, 'beritasampit.co.id', '2'),
+            "68" => actionAll2('beritasampit4', $steming1, 'beritasampit.co.id', '3'),
+            "69" => actionAll2('baritaitah1', $steming1, 'baritaitah.co.id', '0'),
+            "70" => actionAll2('baritaitah2', $steming1, 'baritaitah.co.id', '1'),
+            "71" => actionAll2('baritaitah3', $steming1, 'baritaitah.co.id', '2'),
+            "72" => actionAll2('baritaitah4', $steming1, 'baritaitah.co.id', '3'),
+            "73" => actionAll2('kalteng.indeksnews1', $steming1, 'kalteng.indeksnews.com', '0'),
+            "74" => actionAll2('kalteng.indeksnews2', $steming1, 'kalteng.indeksnews.com', '1'),
+            "75" => actionAll2('kalteng.indeksnews3', $steming1, 'kalteng.indeksnews.com', '2'),
+            "76" => actionAll2('kalteng.indeksnews4', $steming1, 'kalteng.indeksnews.com', '3'),
+            "77" => actionAll2('masapnews1', $steming1, 'masapnews.com', '0'),
+            "78" => actionAll2('masapnews2', $steming1, 'masapnews.com', '1'),
+            "79" => actionAll2('masapnews3', $steming1, 'masapnews.com', '2'),
+            "80" => actionAll2('masapnews4', $steming1, 'masapnews.com', '3'),
+
         );
 
-        // dd($data);
+        // dd($data, $string1, $caseFolding1, $numberRemoval1, $filtering1, $steming1);
+        // dd(session()->get('key'));
 
         return view('hasil-similarity', [
             "title"         => "Hasil Similarity Berita Online",
