@@ -19,4 +19,4 @@ Input url berita data uji, untuk menguji berita tersebut memiliki similarity ber
 
 ## Halaman Hasil Similarity
 
-<p align="center"><a href="https://ibb.co/17wC82C"><img src="https://i.ibb.co/YPq5pj5/Screen-Shot-2022-02-16-at-13-44-30.png" alt="Screen-Shot-2022-02-16-at-13-44-30" border="0"></a></p>
+<p align="center"><a href="https://ibb.co/17wC82C"><img src="https://i.ibb.co/YPq5pj5/Screen-Shot-2022-02-16-at-13-44-30.png" alt="Screen-Shot-2022-02-16-at-13-44-30" border="0"></a><br><a href="https://ibb.co/fv5jyqV"><img src="https://i.ibb.co/cLH4ZkK/Screen-Shot-2022-02-16-at-13-45-02.png" alt="Screen-Shot-2022-02-16-at-13-45-02" border="0"></a></p>
