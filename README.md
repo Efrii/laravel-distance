@@ -1,9 +1,6 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center"><a href="https://www.linkedin.com/in/teguh-efriyanto-164940140/" target="_blank"><img src="https://i.ibb.co/MCbXFJk/Screen-Shot-2022-02-16-at-13-49-08.png" width="400"></a></p>
 
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
@@ -13,10 +10,10 @@ Cek similarity berita online berguna untuk mengetahui seberapa besar wartawan me
 
 ## Halaman Input Url
 
-<img src="https://i.ibb.co/NCJZ2N3/screencapture-laravel-distance-test-2022-02-16-13-36-46.png">
+<p align="center"><img src="https://i.ibb.co/NCJZ2N3/screencapture-laravel-distance-test-2022-02-16-13-36-46.png"></p>
 
 Input url berita data uji, untuk menguji berita tersebut memiliki similarity berapa persen dengan berita lain dengan topik yang sama.
 
 ## Halaman Hasil Similarity
 
-<p align="center"><a href="https://ibb.co/17wC82C"><img src="https://i.ibb.co/YPq5pj5/Screen-Shot-2022-02-16-at-13-44-30.png" alt="Screen-Shot-2022-02-16-at-13-44-30" border="0"></a><br><a href="https://ibb.co/fv5jyqV"><img src="https://i.ibb.co/cLH4ZkK/Screen-Shot-2022-02-16-at-13-45-02.png" alt="Screen-Shot-2022-02-16-at-13-45-02" border="0"></a></p>
+<p align="center"><a href="https://ibb.co/17wC82C"><img src="https://i.ibb.co/YPq5pj5/Screen-Shot-2022-02-16-at-13-44-30.png" alt="Screen-Shot-2022-02-16-at-13-44-30" border="0"></a><br><a href="https://ibb.co/fv5jyqV"><img src="https://i.ibb.co/cLH4ZkK/Screen-Shot-2022-02-16-at-13-45-02.png" alt="Screen-Shot-2022-02-16-at-13-45-02" border="0"></a><br><a href="https://ibb.co/RBpzDz0"><img src="https://i.ibb.co/QCFrKrN/Screen-Shot-2022-02-16-at-13-45-37.png" alt="Screen-Shot-2022-02-16-at-13-45-37" border="0"></a></p>
